@@ -16,6 +16,7 @@ import { Route as ResultRouteImport } from './routes/result'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as PracticeIndexRouteImport } from './routes/practice/index'
 import { Route as PracticeExamIdIndexRouteImport } from './routes/practice/$examId/index'
+import { Route as PracticeModeModeRouteImport } from './routes/practice/mode/$mode'
 import { Route as PracticeExamIdSubtestIdIndexRouteImport } from './routes/practice/$examId/$subtestId/index'
 import { Route as PracticeExamIdSubtestIdMaterialIdRouteImport } from './routes/practice/$examId/$subtestId/$materialId'
 import { Route as SessionExamIdSubtestIdMaterialIdRouteImport } from './routes/session/$examId/$subtestId/$materialId'
@@ -55,6 +56,11 @@ const PracticeExamIdIndexRoute = PracticeExamIdIndexRouteImport.update({
   path: '/practice/$examId/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PracticeModeModeRoute = PracticeModeModeRouteImport.update({
+  id: '/practice/mode/$mode',
+  path: '/practice/mode/$mode',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PracticeExamIdSubtestIdIndexRoute =
   PracticeExamIdSubtestIdIndexRouteImport.update({
     id: '/practice/$examId/$subtestId/',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/result': typeof ResultRoute
   '/review': typeof ReviewRoute
   '/practice/': typeof PracticeIndexRoute
+  '/practice/mode/$mode': typeof PracticeModeModeRoute
   '/practice/$examId/': typeof PracticeExamIdIndexRoute
   '/practice/$examId/$subtestId/$materialId': typeof PracticeExamIdSubtestIdMaterialIdRoute
   '/session/$examId/$subtestId/$materialId': typeof SessionExamIdSubtestIdMaterialIdRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/result': typeof ResultRoute
   '/review': typeof ReviewRoute
   '/practice': typeof PracticeIndexRoute
+  '/practice/mode/$mode': typeof PracticeModeModeRoute
   '/practice/$examId': typeof PracticeExamIdIndexRoute
   '/practice/$examId/$subtestId/$materialId': typeof PracticeExamIdSubtestIdMaterialIdRoute
   '/session/$examId/$subtestId/$materialId': typeof SessionExamIdSubtestIdMaterialIdRoute
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/result': typeof ResultRoute
   '/review': typeof ReviewRoute
   '/practice/': typeof PracticeIndexRoute
+  '/practice/mode/$mode': typeof PracticeModeModeRoute
   '/practice/$examId/': typeof PracticeExamIdIndexRoute
   '/practice/$examId/$subtestId/$materialId': typeof PracticeExamIdSubtestIdMaterialIdRoute
   '/session/$examId/$subtestId/$materialId': typeof SessionExamIdSubtestIdMaterialIdRoute
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/result'
     | '/review'
     | '/practice/'
+    | '/practice/mode/$mode'
     | '/practice/$examId/'
     | '/practice/$examId/$subtestId/$materialId'
     | '/session/$examId/$subtestId/$materialId'
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/result'
     | '/review'
     | '/practice'
+    | '/practice/mode/$mode'
     | '/practice/$examId'
     | '/practice/$examId/$subtestId/$materialId'
     | '/session/$examId/$subtestId/$materialId'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/result'
     | '/review'
     | '/practice/'
+    | '/practice/mode/$mode'
     | '/practice/$examId/'
     | '/practice/$examId/$subtestId/$materialId'
     | '/session/$examId/$subtestId/$materialId'
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   ResultRoute: typeof ResultRoute
   ReviewRoute: typeof ReviewRoute
   PracticeIndexRoute: typeof PracticeIndexRoute
+  PracticeModeModeRoute: typeof PracticeModeModeRoute
   PracticeExamIdIndexRoute: typeof PracticeExamIdIndexRoute
   PracticeExamIdSubtestIdMaterialIdRoute: typeof PracticeExamIdSubtestIdMaterialIdRoute
   SessionExamIdSubtestIdMaterialIdRoute: typeof SessionExamIdSubtestIdMaterialIdRoute
@@ -214,6 +227,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PracticeExamIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/practice/mode/$mode': {
+      id: '/practice/mode/$mode'
+      path: '/practice/mode/$mode'
+      fullPath: '/practice/mode/$mode'
+      preLoaderRoute: typeof PracticeModeModeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/practice/$examId/$subtestId/': {
       id: '/practice/$examId/$subtestId/'
       path: '/practice/$examId/$subtestId'
@@ -245,6 +265,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResultRoute: ResultRoute,
   ReviewRoute: ReviewRoute,
   PracticeIndexRoute: PracticeIndexRoute,
+  PracticeModeModeRoute: PracticeModeModeRoute,
   PracticeExamIdIndexRoute: PracticeExamIdIndexRoute,
   PracticeExamIdSubtestIdMaterialIdRoute:
     PracticeExamIdSubtestIdMaterialIdRoute,
