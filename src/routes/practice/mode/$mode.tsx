@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Screen, PageHeader, ListRow } from "@/components/app-shell";
 import { exams } from "@/data/prototype";
+import { FundamentalPath } from "@/components/fundamental-path";
 
 const modes = {
   drill: { title: "Drill Soal", description: "Latihan bebas sesuai kebutuhanmu." },
@@ -112,19 +113,7 @@ function ModeScreen() {
           <p className="mt-4 text-[13px] text-muted-foreground">Bacaan ini adalah pratinjau dan belum dapat dibuka.</p>
         </section>
       )}
-      {mode === "fundamental" && (
-        <section className="max-w-2xl">
-          <p className="mb-6 text-[14px] leading-6 text-muted-foreground">Mulai dari dasar, bukan dari jenis ujian. Bangun fondasi belajar satu keterampilan pada satu waktu.</p>
-          <SectionTitle>Fondasi belajar</SectionTitle>
-          <div className="border-y border-border">
-            <PreviewRow title="Matematika" detail="Operasi dasar, pecahan" />
-            <PreviewRow title="English" detail="Vocabulary, grammar" />
-            <PreviewRow title="Bahasa Indonesia" detail="EYD, SPOK" />
-            <PreviewRow title="Logika" detail="Pola, analogi" last />
-          </div>
-          <p className="mt-4 text-[13px] text-muted-foreground">Pratinjau materi dasar · pelajaran lengkap segera hadir.</p>
-        </section>
-      )}
+      {mode === "fundamental" && <FundamentalPath />}
       <Link to="/practice" className="tap mt-8 inline-flex items-center gap-2 text-[13px] font-medium text-primary hover:underline">
         Lihat semua mode <ArrowRight size={15} aria-hidden="true" />
       </Link>
