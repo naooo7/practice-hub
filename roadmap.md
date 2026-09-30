@@ -6,4 +6,4 @@
 - [x] Validate empty/populated Home and Results on mobile and desktop.
 - [x] Add a persistent desktop sidebar without changing page content or mobile navigation.
 
-- [ ] Restructure Practice into five clickable modes with compact previews; preserve the original app.
+- [x] Restructure Practice into five clickable modes with compact previews; preserve the original app.
