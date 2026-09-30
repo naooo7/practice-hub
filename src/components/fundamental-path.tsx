@@ -91,8 +91,8 @@ const pct = (s: Subject, done: number) =>
 function locate(s: Subject, index: number) {
   let i = index;
   for (let l = 0; l < s.levels.length; l++) {
-    if (i < s.levels[l].lessons.length) return { level: l, pos: i };
-    i -= s.levels[l].lessons.length;
+    if (i < s.levels[l]!.lessons.length) return { level: l, pos: i };
+    i -= s.levels[l]!.lessons.length;
   }
   return { level: s.levels.length - 1, pos: s.levels.at(-1)!.lessons.length - 1 };
 }
@@ -203,7 +203,7 @@ function PathView({ subject, done, onBack, onOpen }: { subject: Subject; done: n
         <div>
           <p className="text-[20px] font-semibold tracking-tight">{subject.name}</p>
           <p className="mt-0.5 text-[13px] text-muted-foreground">
-            Now: {subject.levels[current.level].name} — {subject.levels[current.level].lessons[current.pos]}
+            Now: {subject.levels[current.level]!.name} — {subject.levels[current.level]!.lessons[current.pos]}
           </p>
         </div>
         <span className="text-[13px] font-semibold tabular-nums text-primary">{pct(subject, done)}%</span>
@@ -224,7 +224,7 @@ function PathView({ subject, done, onBack, onOpen }: { subject: Subject; done: n
                   const i = flat++;
                   const state = i < done ? "done" : i === done ? "current" : "locked";
                   const isFinal = lesson === FINAL;
-                  const x = isFinal ? 0 : offsets[pi % offsets.length];
+                  const x = isFinal ? 0 : (offsets[pi % offsets.length] ?? 0);
                   return (
                     <li key={i} className="relative flex flex-col items-center" style={{ transform: `translateX(calc(${x} * clamp(28px, 7vw, 56px)))` }}>
                       <Node state={state} final={isFinal} label={lesson} letter={String.fromCharCode(65 + pi)} onClick={() => (state === "locked" ? setHint(i) : onOpen(i))} />
@@ -273,8 +273,8 @@ function Lesson({ subject, index, onExit, onFinish }: { subject: Subject; index:
   const [step, setStep] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const loc = locate(subject, index);
-  const lessonName = subject.levels[loc.level].lessons[loc.pos];
-  const q = questions[step];
+  const lessonName = subject.levels[loc.level]!.lessons[loc.pos];
+  const q = questions[step]!;
   const answered = picked !== null;
   const correct = picked === q.answer;
 
@@ -298,7 +298,7 @@ function Lesson({ subject, index, onExit, onFinish }: { subject: Subject; index:
         </div>
       </div>
       <p className="label-xs">{subject.name}</p>
-      <p className="mt-1 text-[14px] text-muted-foreground">{subject.levels[loc.level].name} — {lessonName}</p>
+      <p className="mt-1 text-[14px] text-muted-foreground">{subject.levels[loc.level]!.name} — {lessonName}</p>
       <h2 className="mt-6 text-[22px] font-semibold tracking-tight">{q.q}</h2>
       <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
         {q.options.map((o, i) => {
@@ -325,10 +325,10 @@ function Lesson({ subject, index, onExit, onFinish }: { subject: Subject; index:
 
 function Complete({ subject, index, onContinue }: { subject: Subject; index: number; onContinue: () => void }) {
   const loc = locate(subject, index);
-  const level = subject.levels[loc.level];
+  const level = subject.levels[loc.level]!;
   const name = level.lessons[loc.pos];
   const hasNext = index + 1 < totalLessons(subject);
-  const nextName = hasNext ? (() => { const n = locate(subject, index + 1); return subject.levels[n.level].lessons[n.pos]; })() : null;
+  const nextName = hasNext ? (() => { const n = locate(subject, index + 1); return subject.levels[n.level]!.lessons[n.pos]; })() : null;
   return (
     <section className="mx-auto max-w-md py-8 text-center">
       <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-success text-success-foreground">
